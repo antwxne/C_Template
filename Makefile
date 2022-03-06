@@ -2,6 +2,7 @@
 MAIN	=	$(addprefix sources/, main.c)
 SRC	=
 OBJ	=	$(SRC:.c=.o)
+MAIN_OBJ	=	$(MAIN:.c=.o)
 NAME	=	a.out
 CC	=	gcc
 RM	?= rm -f
@@ -15,12 +16,12 @@ LDLIBS	=
 
 # Rules
 .PHONY:	all
-all:	$(OBJ)	$(MAIN)
+all:	$(OBJ)	$(MAIN_OBJ)
 	$(CC) -o $(NAME) $(OBJ) $(MAIN) $(LDFLAGS) $(LDLIBS)
 
 .PHONY:	clean
 clean:
-	$(RM) $(OBJ)
+	$(RM) $(OBJ) $(MAIN_OBJ)
 
 .PHONY:	fclean
 fclean:	clean

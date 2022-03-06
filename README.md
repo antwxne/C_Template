@@ -1,1 +1,7 @@
-# C_Template
+# Project name
+
+## Build
+
+```shell
+make
+```

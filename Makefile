@@ -17,7 +17,7 @@ LDLIBS	=
 # Rules
 .PHONY:	all
 all:	$(OBJ)	$(MAIN_OBJ)
-	$(CC) -o $(NAME) $(OBJ) $(MAIN) $(LDFLAGS) $(LDLIBS)
+	$(CC) -o $(NAME) $(OBJ) $(MAIN_OBJ) $(LDFLAGS) $(LDLIBS)
 
 .PHONY:	clean
 clean:

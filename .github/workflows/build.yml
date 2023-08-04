@@ -19,6 +19,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Clean repository
+        continue-on-error: true
         run: make fclean
       - name: Build project
         run: make
@@ -31,7 +32,7 @@ jobs:
       env:
         CRITERION_JOBS: N
         CRITERION_VERBOSITY_LEVEL: 1
-        CRITERION_OUTPUTS: xml:tests_results.xml
+        CRITERION_OUTPUTS: xml:tests_results.xml,tap:tests_results.tap
         CRITERION_ALWAYS_SUCCEED: 1
 
     steps:
@@ -39,6 +40,7 @@ jobs:
         run: dnf -y install lcov
       - uses: actions/checkout@v3
       - name: Clean repository
+        continue-on-error: true
         run: make fclean
       - name: Run tests
         run: |
@@ -52,14 +54,19 @@ jobs:
         with:
           name: tests_coverage
           path: CODE_COVERAGE/*
+          retention-days: 7
       - name: Upload tests results
         uses: actions/upload-artifact@v3
         with:
           name: tests_results
-          path: tests_results.xml
+          path: |
+            tests_results.xml
+            tests_results.tap
+          retention-days: 7
+          
       - name: Publish Test Report
         uses: mikepenz/action-junit-report@v3
-        if: success() || failure()
+        if: always()
         with:
           report_paths: tests_results.xml
           require_tests: false

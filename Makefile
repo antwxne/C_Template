@@ -1,35 +1,57 @@
-# Var
-MAIN	=	$(addprefix sources/, main.c)
-SRC	=
+##
+## EPITECH PROJECT, 2023
+## C_Template
+## File description:
+## Makefile
+##
+
+
+NAME	= a.out
+TEST_NAME	=	unit_tests
+
+SRC_DIR	=	sources/
+TESTS_DIR	=	tests/
+
+SRC	=	$(addprefix $(SRC_DIR), main.c \
+	plop.c)
 OBJ	=	$(SRC:.c=.o)
-MAIN_OBJ	=	$(MAIN:.c=.o)
-NAME	=	a.out
+TESTS_SRC	=	$(addprefix $(TESTS_DIR), basic_assertions.c \
+	basic_parameterized.c)
+TESTS_OBJ	=	$(TESTS_SRC:.c=.o)
+
 CC	=	gcc
-RM	?= rm -f
-
-# Flags
-
-CFLAGS	=	-Wall -Wextra
-CPPFLAGS	=	-iquote ./include
-LDFLAGS	=
+rm	?=	rm -f
+CFLAGS	=	-Wall -Wextra -Werror
+CPPFLAGS	=	
 LDLIBS	=
+LDFLAGS	=
 
-# Rules
-.PHONY:	all
-all:	$(OBJ)	$(MAIN_OBJ)
-	$(CC) -o $(NAME) $(OBJ) $(MAIN_OBJ) $(LDFLAGS) $(LDLIBS)
+all: $(NAME)
 
-.PHONY:	clean
+$(NAME): $(OBJ)
+	$(CC) -o $(NAME) $(OBJ) $(LDLIBS)
+
 clean:
-	$(RM) $(OBJ) $(MAIN_OBJ)
+	$(RM) $(OBJ)
 
-.PHONY:	fclean
-fclean:	clean
+fclean: clean
 	$(RM) $(NAME)
 
-.PHONY:	re
 re: fclean all
 
-.PHONY:	debug
 debug: CFLAGS += -g3
 debug: re
+
+tests_run: CFLAGS += -fprofile-arcs -ftest-coverage -O0
+tests_run: LDLIBS += -lcriterion -lgcov
+tests_run: SRC := $(filter-out $(addprefix $(SRC_DIR), main.c), $(SRC))
+tests_run: $(OBJ) $(TESTS_OBJ)
+	$(CC) -o $(TEST_NAME) $(OBJ) $(TESTS_OBJ) $(LDFLAGS) $(LDLIBS)
+	./$(TEST_NAME)
+
+coverage: tests_run
+coverage:
+	lcov --capture --directory sources/ --output-file tests_coverage.info
+	genhtml tests_coverage.info --output-directory CODE_COVERAGE
+
+.PHONY: all clean fclean $(NAME) re debug tests_run

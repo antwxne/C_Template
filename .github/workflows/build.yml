@@ -1,0 +1,48 @@
+name: Build Check
+
+on:
+  push:
+    branches:
+      - master
+      - main
+  pull_request:
+    branches:
+      - master
+      - main
+
+jobs:
+  build:
+    name: Build project
+    runs-on: ubuntu-latest
+    container:
+        image: epitechcontent/epitest-docker:latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Clean repository
+        run: make fclean
+      - name: Build project
+        run: make
+
+  unit_tests:
+    name: Run unit tests
+    runs-on: ubuntu-latest
+    container:
+      image: epitechcontent/epitest-docker:latest
+    steps:
+      - name: Installing coverage tools
+        run: dnf -y install lcov
+      - uses: actions/checkout@v2
+      - name: Clean repository
+        run: make fclean
+      - name: Run tests
+        run: make tests_run
+      - name: Get Coverage
+        run: |
+          lcov --capture --directory sources/ --output-file tests_coverage.info
+          genhtml tests_coverage.info --output-directory CODE_COVERAGE
+      - name: Upload tests coverage
+        uses: actions/upload-artifact@v2
+        with:
+          name: tests_results
+          path: |
+            CODE_COVERAGE/*

@@ -12,7 +12,7 @@ struct my_params
 ParameterizedTestParameters(basic_parameterized, min)
 {
     static struct my_params params[] = {
-        {1, 2}, {2, 4}};
+        {1, 2}, {5, 4}};
 
     size_t nb_params = sizeof(params) / sizeof(struct my_params);
     return cr_make_param_array(struct my_params, params, nb_params);
@@ -20,5 +20,6 @@ ParameterizedTestParameters(basic_parameterized, min)
 
 ParameterizedTest(struct my_params *param, basic_parameterized, min)
 {
-    cr_expect(param->param0 < param->param1);
+    cr_log_info("params0: %d\nparams1: %d\n", param->param0, param->param1);
+    cr_expect(param->param0 < param->param1, "Got: %d\nExpected: %d\n", param->param0 < param->param1, true);
 }

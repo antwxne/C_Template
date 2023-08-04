@@ -62,8 +62,8 @@ jobs:
         if: success() || failure()
         with:
           report_paths: tests_results.xml
-          fail_on_failure: false
           require_tests: false
           require_passed_tests: true
           include_passed: true
           detailed_summary: true
+          job_name: Unit tests report

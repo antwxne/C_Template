@@ -13,7 +13,7 @@ SRC_DIR	=	sources/
 TESTS_DIR	=	tests/
 
 SRC	=	$(addprefix $(SRC_DIR), main.c \
-	plop.c)
+								for_unit_tests.c)
 OBJ	=	$(SRC:.c=.o)
 TESTS_SRC	=	$(addprefix $(TESTS_DIR), basic_assertions.c \
 	basic_parameterized.c)

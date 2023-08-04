@@ -36,8 +36,6 @@ jobs:
         CRITERION_ALWAYS_SUCCEED: 1
 
     steps:
-      - name: Installing coverage tools
-        run: dnf -y install lcov
       - uses: actions/checkout@v3
       - name: Clean repository
         continue-on-error: true
@@ -47,13 +45,15 @@ jobs:
           make tests_run
       - name: Get Coverage
         run: |
-          lcov --capture --directory sources/ --output-file tests_coverage.info
-          genhtml tests_coverage.info --output-directory CODE_COVERAGE
+          mkdir -p CODE_COVERAGE/
+          gcovr -e tests/ -x -o coverage.xml --html-details CODE_COVERAGE/index.html
       - name: Upload tests coverage
         uses: actions/upload-artifact@v3
         with:
           name: tests_coverage
-          path: CODE_COVERAGE/*
+          path: |
+            CODE_COVERAGE/*
+            coverage.xml
           retention-days: 7
       - name: Upload tests results
         uses: actions/upload-artifact@v3
@@ -74,3 +74,16 @@ jobs:
           include_passed: true
           detailed_summary: true
           job_name: Unit tests report
+
+      - name: Code Coverage Report
+        uses: irongut/CodeCoverageSummary@v1.3.0
+        with:
+          filename: coverage.xml
+          badge: true
+          fail_below_min: true
+          format: markdown
+          hide_branch_rate: false
+          hide_complexity: true
+          indicators: true
+          output: both
+          thresholds: '60 80'

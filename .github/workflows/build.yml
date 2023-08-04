@@ -31,7 +31,7 @@ jobs:
       env:
         CRITERION_JOBS: N
         CRITERION_VERBOSITY_LEVEL: 0
-        CRITERION_OUTPUTS: xml:tests_result.xml
+        CRITERION_OUTPUTS: xml:tests_results.xml
 
     steps:
       - name: Installing coverage tools
@@ -40,7 +40,8 @@ jobs:
       - name: Clean repository
         run: make fclean
       - name: Run tests
-        run: make tests_run
+        run: |
+          make tests_run
       - name: Get Coverage
         run: |
           lcov --capture --directory sources/ --output-file tests_coverage.info

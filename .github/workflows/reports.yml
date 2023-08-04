@@ -2,8 +2,8 @@ name: Reports
 
 on:
   workflow_run:
-    workflows: unit_tests
-    types: completed
+    workflows: [unit_tests]
+    types: [completed]
 
 permissions:
   checks: write

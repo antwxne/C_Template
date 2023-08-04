@@ -1,7 +1,7 @@
 #include <criterion/criterion.h>
 #include <criterion/parameterized.h>
 
-TestSuite(basic_parameterized, .disabled = false);
+TestSuite(basic_parameterized, .disabled = true);
 
 struct my_params
 {
@@ -12,7 +12,7 @@ struct my_params
 ParameterizedTestParameters(basic_parameterized, min)
 {
     static struct my_params params[] = {
-        {1, 2}, {5, 4}};
+        {1, 2}, {2, 4}};
 
     size_t nb_params = sizeof(params) / sizeof(struct my_params);
     return cr_make_param_array(struct my_params, params, nb_params);

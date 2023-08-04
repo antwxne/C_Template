@@ -21,5 +21,5 @@ ParameterizedTestParameters(basic_parameterized, min)
 ParameterizedTest(struct my_params *param, basic_parameterized, min)
 {
     cr_log_info("params0: %d\nparams1: %d\n", param->param0, param->param1);
-    cr_expect(param->param0 < param->param1, "Got: %d\nExpected: %d\n", param->param0 < param->param1, true);
+    cr_expect(param->param0 < param->param1, "Got: %d and Expected: %d\n", param->param0 < param->param1, true);
 }

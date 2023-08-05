@@ -86,7 +86,7 @@ jobs:
           detailed_summary: true
           job_name: Unit tests report
   coverage_report:
-    needs: [unit_tests, tests_report]       
+    needs: unit_tests       
     name: Coverage report
     runs-on: ubuntu-latest
     steps:
@@ -107,4 +107,4 @@ jobs:
           output: both
           thresholds: '60 80'
       - name: Coverage summary
-        run: cat code-coverage-results.md >> ${{ needs.tests_report.outputs }}
+        run: cat code-coverage-results.md >> $GITHUB_STEP_SUMMARY

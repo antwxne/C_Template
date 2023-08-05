@@ -38,10 +38,10 @@ fclean: clean
 
 re: fclean all
 
-debug: CFLAGS += -g3
+debug: CFLAGS += -g3 -O0
 debug: re
 
-tests_run: CFLAGS += -fprofile-arcs -ftest-coverage -O0
+tests_run: CFLAGS += -fprofile-arcs -ftest-coverage -g3 -O0
 tests_run: LDLIBS += -lcriterion -lgcov
 tests_run: SRC := $(filter-out $(addprefix $(SRC_DIR), main.c), $(SRC))
 tests_run: $(OBJ) $(TESTS_OBJ)

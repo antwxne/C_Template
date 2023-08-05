@@ -46,8 +46,7 @@ jobs:
         continue-on-error: true
         run: make fclean
       - name: Run tests
-        run: |
-          make tests_run
+        run: make tests_run
       - name: Get Coverage
         run: |
           mkdir -p CODE_COVERAGE/

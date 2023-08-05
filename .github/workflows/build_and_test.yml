@@ -51,7 +51,7 @@ jobs:
       - name: Get Coverage
         run: |
           mkdir -p CODE_COVERAGE/
-          gcovr -x -o coverage.xml --html-details CODE_COVERAGE/index.html
+          gcovr -e tests -x -o coverage.xml --html-details CODE_COVERAGE/index.html
       - name: Upload tests coverage
         uses: actions/upload-artifact@v3
         with:

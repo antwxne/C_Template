@@ -9,6 +9,10 @@ permissions:
   checks: write
 
 jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "CHECKS"
   tests_report:
     name: Unit tests report
     runs-on: ubuntu-latest

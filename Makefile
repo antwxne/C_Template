@@ -12,8 +12,7 @@ TEST_NAME	=	unit_tests
 SRC_DIR	=	sources/
 TESTS_DIR	=	tests/
 
-SRC	=	$(addprefix $(SRC_DIR), main.c \
-								for_unit_tests.c)
+SRC	=	$(addprefix $(SRC_DIR), main.c)
 OBJ	=	$(SRC:.c=.o)
 TESTS_SRC	=	$(addprefix $(TESTS_DIR), basic_assertions.c \
 	basic_parameterized.c)
@@ -48,10 +47,5 @@ tests_run: SRC := $(filter-out $(addprefix $(SRC_DIR), main.c), $(SRC))
 tests_run: $(OBJ) $(TESTS_OBJ)
 	$(CC) -o $(TEST_NAME) $(OBJ) $(TESTS_OBJ) $(LDFLAGS) $(LDLIBS)
 	./$(TEST_NAME)
-
-coverage: tests_run
-coverage:
-	lcov --capture --directory sources/ --output-file tests_coverage.info
-	genhtml tests_coverage.info --output-directory CODE_COVERAGE
 
 .PHONY: all clean fclean $(NAME) re debug tests_run

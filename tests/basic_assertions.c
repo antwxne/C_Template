@@ -1,7 +1,6 @@
 #include <criterion/criterion.h>
 
-TestSuite(basic_assertions, .disabled=false);
-
+TestSuite(basic_assertions, .disabled = false);
 
 Test(basic_assertions, ok)
 {

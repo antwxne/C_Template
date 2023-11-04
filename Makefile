@@ -19,7 +19,7 @@ TESTS_SRC	=	$(addprefix $(TESTS_DIR), basic_assertions.c \
 TESTS_OBJ	=	$(TESTS_SRC:.c=.o)
 
 CC	=	gcc
-rm	?=	rm -f
+RM	?=	rm -f
 CFLAGS	=	-Wall -Wextra -Werror
 CPPFLAGS	=	
 LDLIBS	=

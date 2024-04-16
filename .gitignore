@@ -5,7 +5,6 @@ unit_tests
 *.dll
 *.a
 *.so
-*.info
 CODE_COVERAGE
 .vscode
 .idea
